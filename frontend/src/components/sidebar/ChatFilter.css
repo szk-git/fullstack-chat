@@ -1,0 +1,140 @@
+.chat-filter {
+  padding: var(--space-2) 0;
+}
+
+.filter-tabs {
+  display: flex;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: var(--space-1);
+  gap: var(--space-1);
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast), transform var(--transition-normal);
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-tab:hover:not(.active) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.filter-tab.active {
+  background: var(--accent-primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.filter-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--accent-primary);
+  opacity: 0.1;
+  animation: filterPulse 0.6s ease-out;
+}
+
+@keyframes filterPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+}
+
+.filter-tab.active .filter-icon svg {
+  color: white;
+}
+
+.filter-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.filter-icon svg {
+  transition: color var(--transition-fast);
+}
+
+.filter-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .filter-tab {
+    padding: var(--space-2);
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  
+  .filter-label {
+    font-size: var(--text-xs);
+  }
+}
+
+/* Compact mode for smaller sidebars */
+@media (max-width: 320px) {
+  .filter-tab .filter-label {
+    display: none;
+  }
+  
+  .filter-tab {
+    justify-content: center;
+    padding: var(--space-2);
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .filter-tabs {
+    border: 2px solid var(--border-primary);
+  }
+  
+  .filter-tab.active {
+    border: 2px solid var(--accent-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .filter-tab {
+    transition: none;
+  }
+  
+  .filter-icon svg {
+    transition: none;
+  }
+  
+  .filter-tab.active::before {
+    animation: none;
+  }
+}

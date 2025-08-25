@@ -1,0 +1,191 @@
+/* Simplified Chat Item */
+.chat-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  margin: 0 0 8px 0;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.chat-item:hover {
+  background: #333333;
+  border-color: #4a5568;
+}
+
+.chat-item.active {
+  border: 2px solid #4a9eff;
+}
+
+/* Chat Icon */
+.chat-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Removed active state icon styling */
+
+/* Chat Content */
+.chat-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.chat-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+  margin-right: 12px;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #e2e8f0;
+  margin: 0;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-indicators {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.chat-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  transition: all var(--transition-fast);
+}
+
+.chat-indicator.pinned {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.chat-indicator.archived {
+  color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+}
+
+/* Removed active state indicator styling */
+
+/* Removed active state title styling */
+
+.chat-time {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+/* Removed active state time styling */
+
+.chat-meta {
+  margin-top: 4px;
+}
+
+.message-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* Removed active state message count styling */
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .chat-item {
+    padding: 12px;
+    margin-bottom: 6px;
+  }
+  
+  .chat-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .chat-title {
+    font-size: 14px;
+  }
+  
+  .chat-time {
+    font-size: 11px;
+  }
+  
+  .message-count {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-item {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .chat-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Focus and accessibility */
+.chat-item:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.chat-item:focus-visible {
+  background: #333333;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .chat-item {
+    border: 2px solid #4a5568;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .chat-item {
+    transition: none;
+  }
+}

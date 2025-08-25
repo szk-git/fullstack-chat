@@ -1,0 +1,75 @@
+.main-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100vh;
+  background: var(--bg-primary);
+  transition: margin-left var(--transition-slow);
+  overflow: hidden;
+}
+
+/* Mobile overlay for sidebar */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  backdrop-filter: blur(2px);
+  animation: fadeIn var(--transition-fast) ease forwards;
+}
+
+/* Desktop behavior - sidebar takes space in layout */
+@media (min-width: 1024px) {
+  .chat-main.sidebar-open {
+    margin-left: 0;
+  }
+  
+  .chat-main.sidebar-closed {
+    margin-left: 0;
+  }
+  
+  .mobile-overlay {
+    display: none;
+  }
+}
+
+/* Tablet and mobile behavior */
+@media (max-width: 1023px) {
+  .chat-main {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+}
+
+/* Focus management for accessibility */
+.main-layout:focus-within {
+  outline: none;
+}
+
+/* Prevent background scroll when sidebar is open on mobile */
+@media (max-width: 1023px) {
+  body:has(.mobile-overlay) {
+    overflow: hidden;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mobile-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: none;
+  }
+}

@@ -1,0 +1,195 @@
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Hide scrollbars completely to prevent scroll artifacts */
+.chat-list::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.chat-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-list::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Firefox scrollbar - hidden */
+.chat-list {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Smooth scrolling */
+.chat-list {
+  scroll-behavior: smooth;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .chat-list::-webkit-scrollbar-thumb {
+    background: var(--text-primary);
+  }
+}
+
+/* Chat Item Wrapper for animations */
+.chat-item-wrapper {
+  position: relative;
+  transform: translateY(0);
+  opacity: 1;
+  transition: none;
+  background: transparent;
+}
+
+/* New chat animation - disabled to prevent flickering */
+.new-chat-animation {
+  animation: none;
+}
+
+@keyframes newChatSlideIn {
+  0% {
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Smooth height transition for existing items - disabled to prevent flickering */
+.chat-items {
+  transition: none;
+}
+
+/* Enhanced entrance effect with glow - disabled to prevent flickering */
+.new-chat-animation::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+  border-radius: 8px;
+  opacity: 0;
+  z-index: -1;
+  animation: none;
+}
+
+@keyframes newChatGlow {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+/* Filter transition states */
+.chat-list.filter-transitioning {
+  opacity: 1;
+  transition: opacity var(--transition-fast) ease-out;
+}
+
+.chat-list.filter-transitioning .chat-items {
+  opacity: 0.8;
+  transform: translateY(2px);
+  transition: opacity var(--transition-fast) ease-out, transform var(--transition-fast) ease-out;
+}
+
+.chat-item-wrapper.filter-loading {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity var(--transition-fast) ease;
+}
+
+/* Entrance animation for new filter results */
+@keyframes filterFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-list:not(.filter-transitioning) .chat-item-wrapper {
+  animation: filterFadeIn var(--transition-normal) ease-out;
+}
+
+/* Stagger the animation for multiple items */
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(3) {
+  animation-delay: 100ms;
+}
+
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(4) {
+  animation-delay: 150ms;
+}
+
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(5) {
+  animation-delay: 200ms;
+}
+
+/* For items beyond the 5th, use a general delay */
+.chat-list:not(.filter-transitioning) .chat-item-wrapper:nth-child(n+6) {
+  animation-delay: 250ms;
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .chat-item-wrapper {
+    transition: none;
+  }
+  
+  .new-chat-animation {
+    animation: none;
+  }
+  
+  .new-chat-animation::before {
+    animation: none;
+    opacity: 0;
+  }
+  
+  /* Simple fade-in for reduced motion */
+  .new-chat-animation {
+    opacity: 1;
+    transform: none;
+  }
+  
+  /* Disable filter animations for reduced motion */
+  .chat-list.filter-transitioning,
+  .chat-list.filter-transitioning .chat-items,
+  .chat-item-wrapper.filter-loading,
+  .chat-list:not(.filter-transitioning) .chat-item-wrapper {
+    transition: none;
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

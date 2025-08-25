@@ -1,0 +1,59 @@
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast);
+  opacity: 0;
+}
+
+.resize-handle:hover,
+.resize-handle.resizing {
+  opacity: 1;
+}
+
+.resize-handle-line {
+  width: 1px;
+  height: 100%;
+  background: var(--border-secondary);
+  transition: all var(--transition-fast);
+}
+
+.resize-handle:hover .resize-handle-line,
+.resize-handle.resizing .resize-handle-line {
+  background: var(--accent-primary);
+  width: 2px;
+}
+
+/* Show handle on sidebar hover */
+.chat-sidebar:hover .resize-handle {
+  opacity: 1;
+}
+
+/* Hide on mobile */
+@media (max-width: 1023px) {
+  .resize-handle {
+    display: none;
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .resize-handle-line {
+    background: var(--text-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .resize-handle,
+  .resize-handle-line {
+    transition: none;
+  }
+}

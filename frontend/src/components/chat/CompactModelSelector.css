@@ -1,0 +1,209 @@
+.compact-model-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.model-selector-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 160px;
+  max-width: 280px;
+  white-space: nowrap;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.model-selector-button:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.model-selector-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.model-selector-button .model-name {
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.dropdown-arrow {
+  transition: transform var(--transition-fast);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.model-dropdown {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  animation: slideUp var(--transition-fast) ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.model-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-3);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  text-align: left;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.model-option:last-child {
+  border-bottom: none;
+}
+
+.model-option:hover:not(:disabled) {
+  background: var(--bg-hover);
+}
+
+.model-option.active {
+  background: var(--info-bg);
+  color: var(--accent-primary);
+}
+
+.model-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.model-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.model-info .model-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.model-info .model-type {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.dropdown-message {
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.error-tooltip {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  right: 0;
+  background: var(--error-bg);
+  color: var(--error);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  z-index: 1001;
+  animation: slideIn var(--transition-fast) ease-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .model-selector-button {
+    min-width: 100px;
+    padding: var(--space-2);
+    font-size: var(--text-xs);
+  }
+  
+  .model-selector-button .model-name {
+    max-width: 80px;
+  }
+  
+  .model-dropdown {
+    left: -50px;
+    right: -50px;
+    max-height: 200px;
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .model-selector-button {
+    border: 2px solid var(--border-primary);
+  }
+  
+  .model-dropdown {
+    border: 2px solid var(--border-primary);
+  }
+  
+  .model-option {
+    border-bottom: 2px solid var(--border-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .model-dropdown {
+    animation: none;
+  }
+  
+  .dropdown-arrow {
+    transition: none;
+  }
+  
+  .error-tooltip {
+    animation: none;
+  }
+}

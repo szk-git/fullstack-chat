@@ -1,0 +1,350 @@
+/* Model Status Component */
+.model-status {
+  position: relative;
+  display: inline-block;
+}
+
+.model-status-compact {
+  display: inline-block;
+}
+
+.model-selector {
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-tertiary);
+  transition: all var(--transition-fast);
+  min-width: 180px;
+}
+
+.model-selector:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-primary);
+}
+
+.current-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* Status Dots */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.status-dot.ready {
+  background: var(--success);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.status-dot.loading {
+  background: var(--info);
+  animation: pulse 2s infinite;
+}
+
+.status-dot.available {
+  background: var(--text-tertiary);
+}
+
+.status-dot.error {
+  background: var(--error);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.status-dot.no-model {
+  background: var(--warning);
+}
+
+/* Dropdown Arrow */
+.dropdown-arrow {
+  color: var(--text-secondary);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Model Dropdown */
+.model-dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  overflow: hidden;
+  animation: slideIn var(--transition-fast) ease forwards;
+  min-width: 280px;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+}
+
+.close-dropdown {
+  background: transparent;
+  color: var(--text-tertiary);
+  border: none;
+  padding: var(--space-1);
+}
+
+.close-dropdown:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.model-list {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.model-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.model-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.model-list::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.model-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+.model-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.model-item:hover {
+  background: var(--bg-hover);
+}
+
+.model-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.model-item.active {
+  background: var(--info-bg);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.model-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.model-name {
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.model-meta {
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.active-badge {
+  background: var(--accent-primary);
+  color: white;
+  padding: var(--space-1) var(--space-2);
+  border-radius: 4px;
+  font-weight: var(--font-medium);
+  flex-shrink: 0;
+}
+
+/* Status Icons */
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-icon.ready {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.status-icon.loading {
+  background: var(--info-bg);
+  color: var(--info);
+  animation: spin 1s linear infinite;
+}
+
+.status-icon.available {
+  background: var(--bg-hover);
+  color: var(--text-tertiary);
+}
+
+/* Dropdown Footer */
+.dropdown-footer {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.refresh-button {
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-2);
+  min-height: 28px;
+}
+
+/* Dropdown Overlay */
+.dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+}
+
+/* Compact Status */
+.model-status-compact .status-indicator {
+  gap: var(--space-1);
+}
+
+.model-status-compact .status-text {
+  font-weight: var(--font-medium);
+}
+
+/* Text Color Classes */
+.text-error {
+  color: var(--error);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .model-dropdown {
+    left: var(--space-2);
+    right: var(--space-2);
+    min-width: auto;
+  }
+  
+  .model-selector {
+    min-width: 140px;
+  }
+  
+  .model-item {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .status-info {
+    display: none; /* Hide detailed info on mobile */
+  }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  .model-dropdown {
+    border: 2px solid var(--border-primary);
+  }
+  
+  .model-item.active {
+    border-left: 4px solid var(--accent-primary);
+  }
+  
+  .status-dot {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-arrow,
+  .model-dropdown,
+  .status-dot,
+  .status-icon.loading {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Focus States */
+.model-selector:focus-visible,
+.model-item:focus-visible,
+.close-dropdown:focus-visible,
+.refresh-button:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}

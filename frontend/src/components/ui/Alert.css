@@ -1,0 +1,159 @@
+/* Alert/Toast Notification Styles */
+.alert {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 400px;
+  min-width: 300px;
+  backdrop-filter: blur(8px);
+  animation: slideInRight 0.3s ease-out;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.alert-success {
+  background: var(--success);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-error {
+  background: var(--error);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-warning {
+  background: var(--warning);
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.alert-info {
+  background: var(--info);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.alert-content {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast) ease;
+  opacity: 0.8;
+}
+
+.alert-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.alert-close:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Animation for slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation for slide out to right */
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+.alert.closing {
+  animation: slideOutRight 0.3s ease-in;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .alert {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    min-width: auto;
+  }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .alert-success {
+  background: #059669;
+}
+
+[data-theme="dark"] .alert-error {
+  background: #dc2626;
+}
+
+[data-theme="dark"] .alert-warning {
+  background: #d97706;
+  color: white;
+}
+
+[data-theme="dark"] .alert-info {
+  background: #0284c7;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .alert {
+    border-width: 2px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+  
+  .alert-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .alert {
+    animation: none;
+  }
+  
+  .alert.closing {
+    animation: none;
+    opacity: 0;
+  }
+}
