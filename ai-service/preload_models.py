@@ -79,7 +79,7 @@ def preload_models():
     print("Starting model pre-loading...")
     
     # Get models from environment variable
-    default_models = os.getenv("DEFAULT_MODELS", "gpt2,microsoft/DialoGPT-small").split(",")
+    default_models = os.getenv("DEFAULT_MODELS", "facebook/blenderbot-400M-distill,microsoft/DialoGPT-small").split(",")
     
     loaded_count = 0
     for model_name in default_models:
