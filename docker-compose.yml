@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: fullstack-chat-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: chatdb
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: chatpass
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chatuser -d chatdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chat-network
+
+  # AI Inference Service
+  ai-service:
+    build:
+      context: .
+      dockerfile: docker/ai.Dockerfile
+    container_name: fullstack-chat-ai
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - TRANSFORMERS_CACHE=/app/.cache
+      - MODEL_CACHE_DIR=/app/models
+      - MAX_CONCURRENT_REQUESTS=4
+      - DEFAULT_MODELS=facebook/blenderbot-400M-distill,microsoft/DialoGPT-small
+      - HF_HOME=/app/.cache
+      - HF_HUB_CACHE=/app/.cache/hub
+    volumes:
+      - ai_models:/app/models
+      - ai_cache:/app/.cache
+    networks:
+      - chat-network
+
+  # API Service
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    container_name: fullstack-chat-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://chatuser:chatpass@postgres:5432/chatdb
+      - AI_SERVICE_URL=http://ai-service:8001
+      - SECRET_KEY=dev-secret-key-change-in-production
+      - DEBUG=true
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    networks:
+      - chat-network
+
+  # Frontend Service (Development)
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    container_name: fullstack-chat-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://localhost:8000/api/v1
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      - api
+    networks:
+      - chat-network
+
+volumes:
+  postgres_data:
+    driver: local
+  ai_models:
+    driver: local
+  ai_cache:
+    driver: local
+  frontend_node_modules:
+    driver: local
+
+networks:
+  chat-network:
+    driver: bridge
+    name: fullstack-chat-network
